@@ -9,7 +9,7 @@
 <body>
 	<div class='row'>
 		<header class='col-12'>
-			<h1>Welcome to the Social App</h1>
+			<h1>DW App</h1>
 		</header>
 	</div>
 	<div class='row'>
