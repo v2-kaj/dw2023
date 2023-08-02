@@ -10,13 +10,8 @@
       <header class='col-12'>
         <h1>DW APP - All Users</h1>
       </header>
-
       <div id="allUsers" class="col-6">
-
-<ol>
-
-
-
+    <ol>
     <?php
     $servername = "localhost";
     $username = "root";
@@ -38,14 +33,11 @@
         if (mysqli_num_rows($users) > 0) {
             // output data of each user
             foreach ($users as $user) {
-                echo "<li>" . $user["username"] . $user["email"] ."</li>";
+                echo "<li>" . $user["username"] ." ". $user["email"] ."</li>";
             }
         } else {
-            echo "Users";
+            echo "No users";
         }
-
-
-
     mysqli_close($conn);
 ?>
 </ol>
