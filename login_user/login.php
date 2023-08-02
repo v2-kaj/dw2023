@@ -1,10 +1,5 @@
-<?php
-// Start the session
-session_start();
-?>
 <!DOCTYPE html>
 <html>
-
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Login</title>
@@ -22,11 +17,6 @@ session_start();
 		<div class='col-4'>
 			<h3>Login</h3>
 			<form action="login_user.php" method="POST">
-				<?php
-				if (isset($_SESSION["isloggedin"])) {
-					echo "<p>Invalid Credentials</p>";
-				}
-				?>
 				Username <br />
 				<input type="text" name="user_name" placeholder='username' />
 				<br>

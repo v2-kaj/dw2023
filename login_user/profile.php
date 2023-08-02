@@ -14,14 +14,15 @@ if(!isset($_SESSION["isloggedin"])){
 </head>
 <body>
 	<div class='row'>
-		<header class='col-12'><h1>Social App</h1></header>
+		<header class='col-12'>
+      <h1>DW App</h1>
+    </header>
 	</div>
 	<div class='row'>
 		<div class='col-2'></div>
 		<div class='col-8'>
             <h2>Profile:
                 <?php
-
                     $servername = "localhost";
                     $username = "root";
                     $password = "";
@@ -38,7 +39,7 @@ if(!isset($_SESSION["isloggedin"])){
                     $result = mysqli_query($conn, $command);
                     if (mysqli_num_rows($result) > 0) {
                     $row = mysqli_fetch_assoc($result);
-                    echo $row['username'];
+                    echo $row['username']. " ".$row['email'];
                     }
                     else{
                         echo "Error occurred";
@@ -47,7 +48,6 @@ if(!isset($_SESSION["isloggedin"])){
                 ?>
             </h2>
             <a href="logout.php">Logout</a>
-
 		</div>
 		<div class='col-2'></div>
 	</div>
