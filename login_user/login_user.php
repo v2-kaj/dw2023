@@ -1,7 +1,7 @@
+heths
 <?php
 // Start the session
 session_start();
-
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -17,7 +17,6 @@ $username =  $_POST["user_name"];
 $password =  $_POST["user_password"];
 
 $sql = "SELECT * FROM users WHERE username='$username' && password='$password'";
-
 $result = mysqli_query($conn, $sql);
 //Authenticate a user
 if (mysqli_num_rows($result) > 0) {
@@ -27,11 +26,12 @@ if (mysqli_num_rows($result) > 0) {
 	$_SESSION["isloggedin"] =  True;
 	//After successful login redirect the user to the posts page
 	header("Location: profile.php");
-	die();
+	
 }
 //Authentication failed
 else {
 	header("Location: login.php");
+
 }
 mysqli_close($conn);
 ?>

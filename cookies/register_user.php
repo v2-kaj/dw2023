@@ -24,7 +24,15 @@
     $username = $_POST["user_name"];
     $email = $_POST["user_email"];
     $password = $_POST["user_password"];
-    
+
+    $command = "SELECT * FROM users WHERE username='$username'";
+
+    $result = mysqli_query($conn, $command);
+
+    if (mysqli_num_rows($result) > 0) {
+      header("Location: error.php");
+    }
+    else{
     $sql = "INSERT INTO users (username, email, password) VALUES ('$username', '$email','$password')";
 
     //Execute the sql
@@ -48,6 +56,7 @@
         echo "<div class='col-4'></div>";
         echo "</div>";
         }
+      }
 
 	mysqli_close($conn);
 ?>
