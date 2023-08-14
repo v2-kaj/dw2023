@@ -10,49 +10,63 @@
 </head>
 
 <body>
-    <?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "dw_2023";
+    <div class='row'>
+        <div class='col-4'></div>
+        <div class='col-4'>
+            <?php
+            session_start();
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "secure_db";
 
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
+            // Create connection
+            $conn = new mysqli($servername, $username, $password, $dbname);
 
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+            // Check connection
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
 
-    $username = $_POST["user_name"];
-    $email = $_POST["user_email"];
-    $password = $_POST["user_password"];
+            $username = $_POST["user_name"];
+            $email = $_POST["user_email"];
+            $password = $_POST["user_password"];
 
-    $sql = "INSERT INTO users (username, email, password) VALUES ('$username', '$email','$password')";
+            // Check if username already exists
+            $checkStmt = $conn->prepare("SELECT username FROM users WHERE username = ?");
+            $checkStmt->bind_param("s", $username);
+            $checkStmt->execute();
+            $checkResult = $checkStmt->get_result();
 
-    //Execute the sql
-    if (mysqli_query($conn, $sql)) {
-        //This block will execute if data was successfully inserted into the database
-        echo "<div class='row'>";
-        echo "<div class='col-4'></div>";
-        echo "<div class='col-4'>";
-        echo "<p>You have successfully registered</p>";
-        echo "<a href='login.php'>Go to the login page</a>";
-        echo "</div>";
-        echo "<div class='col-4'></div>";
-        echo "</div>";
-    } else {
-        echo "<div class='row'>";
-        echo "<div class='col-4'></div>";
-        echo "<div class='col-4'>";
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-        echo "</div>";
-        echo "<div class='col-4'></div>";
-        echo "</div>";
-    }
+            if ($checkResult->num_rows > 0) {
+                $_SESSION['username_taken'] = true;
+                header("Location: create_account.php");
+            } else {
+                // Hash the user's password
+                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    mysqli_close($conn);
-    ?>
+                // Create a prepared statement
+                $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+                $stmt->bind_param("sss", $username, $email, $hashedPassword);
+
+                // Execute the statement
+                if ($stmt->execute()) {
+                    // This block will execute if data was successfully inserted into the database   
+                    echo "<p>You have successfully registered</p>";
+                    echo "<a href='login.php'>Go to the login page</a>";
+                } else {
+                    echo "Error: " . $stmt->error;
+                }
+            }
+
+            // Close the statements and connection
+            $checkStmt->close();
+            $stmt->close();
+            $conn->close();
+            ?>
+        </div>
+        <div class='col-4'></div>
+    </div>
 </body>
 
 </html>

@@ -1,3 +1,7 @@
+<?php 
+	session_start();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +19,11 @@
 		<div class='col-4'></div>
 		<div class='col-4'>
 			<h3>Create Your Account</h3>
+			<?php 
+				if(isset($_SESSION['username_taken'])){
+					echo "This username is taken";
+				}
+			?>
 			<form action="register_user.php" method="POST">
 				Username <br />
 				<input type="text" name="user_name" placeholder='username' required="required" />
@@ -34,6 +43,9 @@
 			<a href='login.php'>Login</a>
 		</div>
 		<div class='col-4'></div>
+		<?php 
+			unset($_SESSION['username_taken'])
+		?>
 	</div>
 </body>
 </html>
