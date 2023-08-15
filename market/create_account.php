@@ -12,7 +12,7 @@
 <body>
 	<div class='row'>
 		<header class='col-12'>
-			<h1>DW APP</h1>
+			<h1>Online Market</h1>
 		</header>
 	</div>
 	<div class='row'>

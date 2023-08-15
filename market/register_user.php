@@ -21,7 +21,7 @@
             $servername = "localhost";
             $username = "root";
             $password = "";
-            $dbname = "secure_db";
+            $dbname = "market";
 
             // Create connection
             $conn = new mysqli($servername, $username, $password, $dbname);
