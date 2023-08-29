@@ -22,7 +22,7 @@ session_start();
     <div class="row">
         <div class="col-2">
             <?php
-            require_once 'nav.php';
+              require_once 'nav.php';
             ?>
         </div>
         <div class="col-8">
@@ -67,8 +67,8 @@ session_start();
                     if (isset($_SESSION['user_id'])) {
                         if ($product['seller'] == $_SESSION['user_id']) {
                             $_SESSION['product_id'] = $product['id'];
-                            echo "<br>";
                             echo '<a href="update_product.php?id=' . $product['id'] . '">Update </a>';
+                            echo "<br>";
                             echo '<a href="delete_product.php?id=' . $product['id']. '">Unlist</a>';
                         }
                     }

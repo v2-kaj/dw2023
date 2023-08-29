@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // Insert the image path into the database
             $query = "UPDATE products SET name=?, description=?, price=?, image_path=? WHERE id=?";
             $stmt = $conn->prepare($query);
-            $stmt->bind_param("ssssi", $name, $description, $price, $uploadPath, $_GET['id']);
+            $stmt->bind_param("ssssi", $name, $description, $price, $uploadPath, $_GET['product_id']);
             $stmt->execute();
             $stmt->close();
             echo "Image uploaded and saved successfully!";
@@ -67,7 +67,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         </div>
         <div class="col-8">
+          <?php
+          $del_query = "SELECT name, description, price
+                      FROM products
+                      WHERE products.id=?";
+          $del_stmt = $conn->prepare($del_query);
+          $del_stmt->bind_param("i", $_GET['id']);
+          $del_stmt->execute();
+          $del_stmt->bind_result($name, $description, $price);
 
+          ?>
+            
             <h2>Update Product Information</h2>
             <form action="" method="post" enctype="multipart/form-data">
                 <label for="name">Name:</label><br>

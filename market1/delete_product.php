@@ -21,5 +21,5 @@ $stmt->execute();
 $stmt->close();
 header("Location: index.php");
 } else{
-    echo "Not permitted";
+    echo "You are not the owner of the product";
 }

@@ -23,7 +23,7 @@
             <h2>This is the section for Rss</h2>
             <?php
 
-            $rss_feed_url = 'https://www.thecoldwire.com/feed/';
+            $rss_feed_url = 'https://rss.feedspot.com/movie_rss_feeds';
 
             $xml = simplexml_load_file($rss_feed_url);
 
@@ -33,7 +33,7 @@
                 echo '<h3><a href="' . $item->link . '">' . $item->title . '</a></h3>';
                 echo $item->pubDate;
                 $counter++;
-                if ($counter == 4) {
+                if ($counter == 10) {
                     break;
                 }
             }
