@@ -7,7 +7,7 @@
     $xml = new DOMDocument();
     $root = $xml->createElement("Todos");
     $xml->appendChild($root);
-    
+
     $xml->formatOutput = true;
 
     foreach ($results as $result) {

@@ -1,4 +1,5 @@
 <?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 require_once('connect.php');
 $id = $_POST['id'];
 $text= $_POST['text'];
@@ -10,3 +11,7 @@ else{
     echo "No";
 }
 $conn->close();
+} else{
+  echo "Invalid request method. This endpoint only accepts POST requests.";
+
+}

@@ -15,13 +15,13 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             document.querySelector("body").onload = loadTodos
+            // load all todos from the database
             function loadTodos() {
                 let xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
-
+                        // call the displayTodos function passing the data as this
                         displayTodos(this);
-
                     }
                 }
                 xhttp.open("GET", "all_todos_in_xml.php", true);
@@ -32,20 +32,25 @@
             }
             const form = document.querySelector('form')
 
+            // Add a todo
             form.onsubmit = addTodo
 
             function addTodo() {
-
                 const taskField = document.querySelector('#taskField')
                 const li = document.createElement('li')
                 const ol = document.querySelector('ol')
 
                 if (taskField.value.trim().length != 0) {
+                    // the taskField is not empty
                     const todo_text = taskField.value
                     li.innerHTML = todo_text
                     ol.append(li)
+                    //save the todo to the database
                     saveTodo(todo_text)
                     loadTodos()
+                }
+                else{
+                  alert('You did not type any todo')
                 }
                 taskField.value = ""
                 return false
@@ -56,9 +61,7 @@
                 let xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
-
                         console.log("Saved")
-
                     }
                 }
                 xhttp.open("POST", "addTodo.php", true);
@@ -83,10 +86,11 @@
                         const id = button.parentElement.id
                         const text = button.previousElementSibling.innerHTML
                         const inputField = document.createElement('input')
+                        const li = document.createElement('li')
                         inputField.type = "text"
                         inputField.value = text
-                        button.parentElement.replaceWith(inputField)
-
+                        li.append(inputField)
+                        button.parentElement.replaceWith(li)
                         // Listen for the 'keydown' event on the input element
                         inputField.addEventListener('keydown', (event) => {
                             // Check if the 'Enter' key was pressed
@@ -94,8 +98,6 @@
                                 updateTodo(id, inputField.value)
                             }
                         });
-
-
 
                     }
 
@@ -128,20 +130,13 @@
                     if (this.readyState == 4 && this.status == 200) {
                         //Re-load the todos - lazy way
                         loadTodos()
-
                     }
                 }
                 xhttp.open("POST", "updateTodo.php", true);
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 xhttp.send(`id=${id}&text=${text}`);
-
             }
-
-
-
-
         })
-
     </script>
 </head>
 
